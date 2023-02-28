@@ -16,7 +16,6 @@ namespace WebAPI.Models
         [MaxLength(50, ErrorMessage = "Surname cannot exceed 100 characters")]
         public string Surname { get; set; }
 
-
         public ICollection<Book> Books { get; set; }
     }
 }
