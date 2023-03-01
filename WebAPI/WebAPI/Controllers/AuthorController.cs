@@ -4,6 +4,7 @@ using System.Linq;
 using System.Transactions;
 using WebAPI.DAL;
 using WebAPI.Models;
+using WebAPI.Repository;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -13,61 +14,56 @@ namespace WebAPI.Controllers
     [ApiController]
     public class AuthorController : ControllerBase
     {
-        private readonly BookContext _dbContext;
-        public AuthorController(BookContext dbContext)
+        private readonly IAuthorRepository _authorRepository;
+        public AuthorController(IAuthorRepository authorRepository)
         {
-            _dbContext = dbContext;
+            _authorRepository = authorRepository;
         }
-
         // GET: api/Author
         [HttpGet]
         public IActionResult Get()
         {
-            var Authors = _dbContext.Authors.ToList();
-            return new OkObjectResult(Authors);
+            var author = _authorRepository.GetAuthors();
+            return new OkObjectResult(author);
         }
-
         // GET: api/Author/5
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            var Author = _dbContext.Authors.FirstOrDefault(x => x.Id == id);
-            return new OkObjectResult(Author);
+            var author = _authorRepository.GetAuthorById(id);
+            return new OkObjectResult(author);
         }
-
         // POST: api/Author
         [HttpPost]
-        public IActionResult Post([FromBody] Author Author)
+        public IActionResult Post([FromBody] Author author)
         {
-            if (Author != null)
+            using (var scope = new TransactionScope())
             {
-                using var scope = new TransactionScope();
-                _dbContext.Authors.Add(Author);
+                _authorRepository.AddAuthor(author);
                 scope.Complete();
-                return CreatedAtAction(nameof(Get), new { id = Author.Id }, Author);
+                return CreatedAtAction("Get", new { id = author.Id }, author);
             }
-            return new NoContentResult();
         }
-
         // PUT: api/Author/5
         [HttpPut("{id}")]
-        public IActionResult Put([FromBody] Author Author)
+        public IActionResult Put([FromBody] Author author)
         {
-            if (Author != null)
+            if (author != null)
             {
-                using var scope = new TransactionScope();
-                _dbContext.Authors.Add(Author);
-                scope.Complete();
-                return new OkResult();
+                using (var scope = new TransactionScope())
+                {
+                    _authorRepository.UpdateAuthor(author.Id);
+                    scope.Complete();
+                    return new OkResult();
+                }
             }
             return new NoContentResult();
         }
-
         // DELETE: api/Author/5
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            _dbContext.Authors.Remove(_dbContext.Authors.FirstOrDefault(x => x.Id == id));
+            _authorRepository.DeleteAuthor(id);
             return new OkResult();
         }
     }

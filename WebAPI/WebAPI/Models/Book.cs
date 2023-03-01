@@ -23,9 +23,6 @@ namespace WebAPI.Models
         [Required(ErrorMessage = "AuthorId is required")]
         public int AuthorId { get; set; }
 
-        [Required(ErrorMessage = "Author is required")]
-        public Author Author { get; set; }
-
         public bool IsAvailable { get; set; }
     }
 }

@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebAPI.DAL;
+using WebAPI.Repository;
 
 namespace WebAPI
 {
@@ -29,6 +30,8 @@ namespace WebAPI
             services.AddDbContext<BookContext>(o => o.UseSqlServer(Configuration.GetConnectionString
 ("WebAPIDB")));
             services.AddControllers();
+            services.AddTransient<IBookRepository, BookRepository>();
+            services.AddTransient<IAuthorRepository, AuthorRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

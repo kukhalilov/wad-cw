@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "ny7kKsadxq6uNZNrzedgGBp72aryzq8e8i6OqmydVofrdxfmnCJY+fgv1ErEr+pFJ7+NXfbk9SuZ9ZdeUfiRWw==",
+  "dgSpecHash": "Zp/0R8whlV4PWcfmyP5b22pAryF2tpAjbIvBzyq6VKk+5471EP4JNX+SQZfTX7wqE4rf//PfQzI9oAXsKPZ9sA==",
   "success": true,
-  "projectFilePath": "C:\\Users\\kuvon\\source\\repos\\kukhalilov\\wad-cw\\WebAPI\\WebAPI\\WebAPI.csproj",
+  "projectFilePath": "C:\\Users\\kuvon\\Source\\Repos\\kukhalilov\\wad-cw\\WebAPI\\WebAPI\\WebAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\kuvon\\.nuget\\packages\\microsoft.aspnetcore.html.abstractions\\2.2.0\\microsoft.aspnetcore.html.abstractions.2.2.0.nupkg.sha512",
     "C:\\Users\\kuvon\\.nuget\\packages\\microsoft.aspnetcore.razor\\2.2.0\\microsoft.aspnetcore.razor.2.2.0.nupkg.sha512",
