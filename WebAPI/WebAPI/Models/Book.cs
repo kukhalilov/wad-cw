@@ -5,7 +5,12 @@ namespace WebAPI.Models
 {
     public class Book
     {
-        public int Id { get; set; }
+        public Book()
+        {
+            IsAvailable = true;
+        }
+
+        public int BookId { get; set; }
 
         [Required(ErrorMessage = "Title is required")]
         public string Title { get; set; }
@@ -20,8 +25,9 @@ namespace WebAPI.Models
         [Range(1, int.MaxValue, ErrorMessage = "Page count must be a positive integer")]
         public int PageCount { get; set; }
 
-        [Required(ErrorMessage = "AuthorId is required")]
         public int AuthorId { get; set; }
+
+        public virtual Author Author { get; set; }
 
         public bool IsAvailable { get; set; }
     }

@@ -6,7 +6,11 @@ namespace WebAPI.Models
 {
     public class Author
     {
-        public int Id { get; set; }
+        public Author() 
+        {
+            this.Books = new List<Book>();
+        }
+        public int AuthorId { get; set; }
 
         [Required(ErrorMessage = "Name is required")]
         [MaxLength(50, ErrorMessage = "Name cannot exceed 100 characters")]
@@ -16,6 +20,6 @@ namespace WebAPI.Models
         [MaxLength(50, ErrorMessage = "Surname cannot exceed 100 characters")]
         public string Surname { get; set; }
 
-        public ICollection<Book> Books { get; set; }
+        public virtual ICollection<Book> Books { get; set; }
     }
 }
