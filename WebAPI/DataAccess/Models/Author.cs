@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace WebAPI.Models
+namespace DataAccess.Models
 {
     public class Author
     {
@@ -13,11 +13,11 @@ namespace WebAPI.Models
         public int AuthorId { get; set; }
 
         [Required(ErrorMessage = "Name is required")]
-        [MaxLength(50, ErrorMessage = "Name cannot exceed 100 characters")]
+        [MaxLength(100, ErrorMessage = "Name cannot exceed 100 characters")]
         public string Name { get; set; }
 
         [Required(ErrorMessage = "Surname is required")]
-        [MaxLength(50, ErrorMessage = "Surname cannot exceed 100 characters")]
+        [MaxLength(100, ErrorMessage = "Surname cannot exceed 100 characters")]
         public string Surname { get; set; }
 
         public virtual ICollection<Book> Books { get; set; }

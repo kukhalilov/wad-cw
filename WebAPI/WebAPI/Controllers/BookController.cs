@@ -1,9 +1,6 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using System.Transactions;
-using WebAPI.DAL;
-using WebAPI.Models;
-using WebAPI.Repository;
+﻿using DataAccess.Models;
+using DataAccess.Repositories;
+using Microsoft.AspNetCore.Mvc;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 

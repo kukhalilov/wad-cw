@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
-using WebAPI.Models;
+using DataAccess.Models;
 
-namespace WebAPI.DAL
+namespace DataAccess.DAL
 {
     public class BookContext: DbContext
     {

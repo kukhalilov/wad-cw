@@ -1,9 +1,6 @@
 ﻿using System.Collections.Generic;
-using System.Linq.Expressions;
-using System.Linq;
-using System;
 
-namespace WebAPI.Repository
+namespace DataAccess.Repositories
 {
     public interface IGenericRepository<T> where T : class
     {

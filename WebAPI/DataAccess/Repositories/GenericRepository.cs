@@ -1,12 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
-using System.Linq.Expressions;
 using System.Linq;
 using System;
-using WebAPI.DAL;
-using WebAPI.Models;
+using DataAccess.DAL;
 
-namespace WebAPI.Repository
+namespace DataAccess.Repositories
 {
     public class GenericRepository<T> : IGenericRepository<T> where T : class
     {

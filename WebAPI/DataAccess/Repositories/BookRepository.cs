@@ -1,10 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
-using WebAPI.DAL;
-using WebAPI.Models;
+using DataAccess.Models;
+using DataAccess.DAL;
 
-namespace WebAPI.Repository
+namespace DataAccess.Repositories
 {
     public class BookRepository : GenericRepository<Book>
     {
