@@ -3,19 +3,22 @@ using System.Collections.Generic;
 using System.Linq;
 using System;
 using DataAccess.DAL;
+using DataAccess.Logging;
+using DataAccess.Models;
 
 namespace DataAccess.Repositories
 {
-    public class GenericRepository<T> : IGenericRepository<T> where T : class
+    public class GenericRepository<T> : IGenericRepository<T>, IObservable where T : class
     {
         private readonly DbSet<T> _dbSet;
-
         protected readonly BookContext Context;
+        private readonly List<IObserver> _observers;
 
         public GenericRepository(BookContext context)
         {
             Context = context;
             _dbSet = context.Set<T>();
+            _observers = new List<IObserver>();
         }
 
         public virtual IEnumerable<T> GetAll()
@@ -36,6 +39,8 @@ namespace DataAccess.Repositories
 
             _dbSet.Add(entity);
             SaveChanges();
+
+            Notify($"{DateTime.Now}: new {entity.GetType()} added");
         }
 
         public virtual void Update(int id, T entity)
@@ -67,6 +72,24 @@ namespace DataAccess.Repositories
 
             _dbSet.Remove(entityToDelete);
             SaveChanges();
+        }
+
+        public void Attach(IObserver observer)
+        {
+            _observers.Add(observer);
+        }
+
+        public void Detach(IObserver observer)
+        {
+            _observers.Remove(observer);
+        }
+
+        public void Notify(string message)
+        {
+            foreach (var observer in _observers)
+            {
+                observer.Update(message);
+            }
         }
 
         public void SaveChanges()
