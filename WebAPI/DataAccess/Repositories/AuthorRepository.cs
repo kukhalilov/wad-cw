@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using DataAccess.Models;
 using DataAccess.DAL;
+using System.Globalization;
+using System;
 
 namespace DataAccess.Repositories
 {
@@ -12,9 +14,39 @@ namespace DataAccess.Repositories
         {
         }
 
-        public override IEnumerable<Author> GetAll()
+        public override IEnumerable<Author> GetAll(string searchTerm, string sortBy,
+                bool sortAsc, int page, int pageSize
+            )
         {
-            var authors = Context.Authors.Include(a => a.Books).ToList();
+            var query = Context.Authors.Include(a => a.Books).AsQueryable();
+
+            // filter by search term if provided
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                query = query.Where(a => a.Name.Contains(searchTerm) || a.Surname.Contains(searchTerm));
+            }
+
+            // sort by property and direction if provided
+            switch (sortBy)
+            {
+                case "name":
+                    query = sortAsc ? query.OrderBy(a => a.Name) : query.OrderByDescending(a => a.Name);
+                    break;
+                case "surname":
+                    query = sortAsc ? query.OrderBy(a => a.Surname) : query.OrderByDescending(a => a.Surname);
+                    break;
+                default:
+                    query = query.OrderBy(a => a.Name);
+                    break;
+            }
+
+            // apply pagination
+            var totalItems = query.Count();
+            var totalPages = (int)Math.Ceiling((decimal)totalItems / pageSize);
+            query = query.Skip((page - 1) * pageSize).Take(pageSize);
+
+            var authors = query.ToList();
+
             return authors;
         }
 

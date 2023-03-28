@@ -22,9 +22,11 @@ namespace WebAPI.Controllers
 
         // GET: api/{Controller}
         [HttpGet]
-        public virtual IActionResult Get()
+        public virtual IActionResult Get(string searchTerm, string sortBy,
+                bool sortAsc = true, int page = 1, int pageSize = 10
+            )
         {
-            var entities = _repository.GetAll();
+            var entities = _repository.GetAll(searchTerm, sortBy, sortAsc, page, pageSize);
             return new OkObjectResult(entities);
         }
 

@@ -4,7 +4,9 @@ namespace DataAccess.Repositories
 {
     public interface IGenericRepository<T> where T : class
     {
-        IEnumerable<T> GetAll();
+        IEnumerable<T> GetAll(string searchTerm, string sortBy,
+                bool sortAsc = true, int page = 1, int pageSize = 10
+            );
 
         T GetById(int id);
 

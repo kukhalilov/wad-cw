@@ -21,7 +21,9 @@ namespace DataAccess.Repositories
             _observers = new List<IObserver>();
         }
 
-        public virtual IEnumerable<T> GetAll()
+        public virtual IEnumerable<T> GetAll(string searchTerm, string sortBy,
+                bool sortAsc = true, int page = 1, int pageSize = 10
+            )
         {
             return _dbSet.ToList();
         }

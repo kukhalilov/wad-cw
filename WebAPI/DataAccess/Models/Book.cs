@@ -17,6 +17,7 @@ namespace DataAccess.Models
 
         [Required(ErrorMessage = "Publish date is required")]
         [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime PublishDate { get; set; }
 
         [Required(ErrorMessage = "Description is required")]
