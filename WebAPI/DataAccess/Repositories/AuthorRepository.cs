@@ -14,16 +14,18 @@ namespace DataAccess.Repositories
         {
         }
 
-        public override IEnumerable<Author> GetAll(string searchTerm, string sortBy,
+        public override (IEnumerable<Author>, int count) GetAll(string searchTerm, string sortBy,
                 bool sortAsc, int page, int pageSize
             )
         {
             var query = Context.Authors.Include(a => a.Books).AsQueryable();
+            var count = query.Count();
 
             // filter by search term if provided
             if (!string.IsNullOrEmpty(searchTerm))
             {
                 query = query.Where(a => a.Name.Contains(searchTerm) || a.Surname.Contains(searchTerm));
+                count = query.Count();
             }
 
             // sort by property and direction if provided
@@ -47,7 +49,7 @@ namespace DataAccess.Repositories
 
             var authors = query.ToList();
 
-            return authors;
+            return (authors, count);
         }
 
         public override Author GetById(int id)

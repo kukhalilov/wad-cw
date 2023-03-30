@@ -21,11 +21,11 @@ namespace DataAccess.Repositories
             _observers = new List<IObserver>();
         }
 
-        public virtual IEnumerable<T> GetAll(string searchTerm, string sortBy,
+        public virtual (IEnumerable<T>, int count) GetAll(string searchTerm, string sortBy,
                 bool sortAsc = true, int page = 1, int pageSize = 10
             )
         {
-            return _dbSet.ToList();
+            return (_dbSet.ToList(), _dbSet.Count());
         }
 
         public virtual T GetById(int id)

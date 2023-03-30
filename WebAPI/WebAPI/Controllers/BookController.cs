@@ -25,14 +25,11 @@ namespace WebAPI.Controllers
         // GET: api/Book
         [HttpGet]
         public override IActionResult Get(string searchTerm = "", string sortBy = "Title",
-                bool sortAsc = true, int page = 1, int pageSize = 10
-            )
+                bool sortAsc = true, int page = 1, int pageSize = 10)
         {
-            var books = _bookRepository.GetAll(searchTerm, sortBy, sortAsc, page, pageSize);
+            var (books, count) = _bookRepository.GetAll(searchTerm, sortBy, sortAsc, page, pageSize);
 
-            var totalCount = books.Count();
-
-            HttpContext.Response.Headers.Add("Books-Total-Count", totalCount.ToString());
+            HttpContext.Response.Headers.Add("Books-Total-Count", count.ToString());
 
             return new OkObjectResult(books);
         }

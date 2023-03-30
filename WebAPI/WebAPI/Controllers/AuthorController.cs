@@ -28,11 +28,9 @@ namespace WebAPI.Controllers
                 bool sortAsc = true, int page = 1, int pageSize = 10
             )
         {
-            var authors = _authorRepository.GetAll(searchTerm, sortBy, sortAsc, page, pageSize);
+            var (authors, count) = _authorRepository.GetAll(searchTerm, sortBy, sortAsc, page, pageSize);
 
-            var totalCount = authors.Count();
-
-            HttpContext.Response.Headers.Add("Authors-Total-Count", totalCount.ToString());
+            HttpContext.Response.Headers.Add("Authors-Total-Count", count.ToString());
 
             return new OkObjectResult(authors);
         }

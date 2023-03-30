@@ -26,7 +26,7 @@ namespace WebAPI.Controllers
                 bool sortAsc = true, int page = 1, int pageSize = 10
             )
         {
-            var entities = _repository.GetAll(searchTerm, sortBy, sortAsc, page, pageSize);
+            var (entities, _) = _repository.GetAll(searchTerm, sortBy, sortAsc, page, pageSize);
             return new OkObjectResult(entities);
         }
 

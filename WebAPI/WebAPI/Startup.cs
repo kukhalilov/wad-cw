@@ -40,6 +40,8 @@ namespace WebAPI
             app.UseCors(builder => builder
                 .AllowAnyOrigin()
                 .AllowAnyMethod()
+                .WithExposedHeaders("Books-Total-Count")
+                .WithExposedHeaders("Authors-Total-Count")
                 .AllowAnyHeader());
 
             if (env.IsDevelopment())
