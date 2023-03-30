@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html ng-app="app">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <meta name="language" content="English" />
+    <title>BooksApp</title>
+
+    <!-- Load stylesheet -->
+    <link rel="stylesheet" href="css/styles.css" />
+
+    <!-- Load Bootstrap and JQuery libraries -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <!-- Load AngularJS library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.8.2/angular.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-router/1.0.29/angular-ui-router.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/angular-ui-bootstrap/2.5.0/ui-bootstrap-tpls.min.js"></script>
+
+    <!-- Load application modules -->
+    <script src="app.module.js"></script>
+
+    <!-- Load common modules -->
+    <script src="common/utils.js"></script>
+    <script src="common/header.directive.js"></script>
+    <script src="common/footer.directive.js"></script>
+    <script src="common/highlight.filter.js"></script>
+    <script src="common/range.filter.js"></script>
+
+    <!-- Load base modules -->
+    <script src="base/base.service.js"></script>
+
+    <!-- Load author modules -->
+    <script src="authors/author.service.js"></script>
+    <script src="authors/author-details.controller.js"></script>
+    <script src="authors/author-edit.controller.js"></script>
+    <script src="authors/author-add.controller.js"></script>
+    <script src="authors/author-list.controller.js"></script>
+
+    <!-- Load book modules -->
+    <script src="books/book.service.js"></script>
+    <script src="books/book-details.controller.js"></script>
+    <script src="books/book-edit.controller.js"></script>
+    <script src="books/book-add.controller.js"></script>
+    <script src="books/book-list.controller.js"></script>
+  </head>
+  <body>
+    <!-- Add header directive -->
+    <app-header></app-header>
+
+    <!-- Add main content -->
+    <div ui-view></div>
+
+    <!-- Add footer directive -->
+    <app-footer></app-footer>
+  </body>
+</html>

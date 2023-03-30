@@ -1,0 +1,125 @@
+<section class="container">
+  <h1>Edit Book</h1>
+  <form name="editBookForm">
+    <div
+      class="form-group"
+      ng-class="{'has-error': editBookForm.title.$invalid && editBookForm.title.$touched}"
+    >
+      <label for="title">Title:</label>
+      <input
+        type="text"
+        class="form-control"
+        name="title"
+        id="title"
+        ng-model="vm.book.title"
+        required
+        maxlength="100"
+      />
+      <span
+        ng-show="editBookForm.title.$error.required && editBookForm.title.$touched"
+        class="help-block"
+        >Title is required.</span
+      >
+      <span ng-show="editBookForm.title.$error.maxlength" class="help-block"
+        >Title cannot exceed 100 characters.</span
+      >
+    </div>
+    <div
+      class="form-group"
+      ng-class="{'has-error': editBookForm.publishDate.$invalid && editBookForm.publishDate.$touched}"
+    >
+      <label for="publishDate">Publish Date:</label>
+      <input
+        type="date"
+        class="form-control"
+        name="publishDate"
+        id="publishDate"
+        ng-model="vm.book.publishDate"
+        required
+      />
+      <span
+        ng-show="editBookForm.publishDate.$error.required && editBookForm.publishDate.$touched"
+        class="help-block"
+        >Publish Date is required.</span
+      >
+    </div>
+    <div
+      class="form-group"
+      ng-class="{'has-error': editBookForm.description.$invalid && editBookForm.description.$touched}"
+    >
+      <label for="description">Description:</label>
+      <textarea
+        class="form-control"
+        name="description"
+        id="description"
+        ng-model="vm.book.description"
+        required
+        maxlength="1000"
+      ></textarea>
+      <span
+        ng-show="editBookForm.description.$error.required && editBookForm.description.$touched"
+        class="help-block"
+        >Description is required.</span
+      >
+      <span
+        ng-show="editBookForm.description.$error.maxlength"
+        class="help-block"
+        >Description cannot exceed 1000 characters.</span
+      >
+    </div>
+    <div
+      class="form-group"
+      ng-class="{'has-error': editBookForm.pageCount.$invalid && editBookForm.pageCount.$touched}"
+    >
+      <label for="pageCount">Page Count:</label>
+      <input
+        type="number"
+        class="form-control"
+        name="pageCount"
+        id="pageCount"
+        ng-model="vm.book.pageCount"
+        required
+        min="1"
+      />
+      <span
+        ng-show="editBookForm.pageCount.$error.required && editBookForm.pageCount.$touched"
+        class="help-block"
+        >Page Count is required.</span
+      >
+      <span ng-show="editBookForm.pageCount.$error.min" class="help-block"
+        >Page Count must be at least 1.</span
+      >
+    </div>
+    <div class="form-group">
+      <label for="author">Author:</label>
+      <select
+        class="form-control"
+        name="author"
+        id="author"
+        ng-model="vm.book.authorId"
+        ng-options="author.authorId as (author.name + ' ' + author.surname) for author in vm.authors"
+      ></select>
+    </div>
+    <div class="form-group">
+      <label for="availability">Availability:</label>
+      <select
+        class="form-control"
+        name="availability"
+        id="availability"
+        ng-model="vm.book.isAvailable"
+        ng-options="availability.value as availability.label for availability in vm.availabilityOptions"
+      ></select>
+    </div>
+    <button
+      type="submit"
+      class="btn btn-primary"
+      ng-disabled="editBookForm.$invalid"
+      ng-click="vm.saveBook()"
+    >
+      Save
+    </button>
+    <a ui-sref="books" class="btn btn-default">Cancel</a>
+  </form>
+  <br />
+  <div class="text-danger">{{vm.error && 'Error saving the book.'}}</div>
+</section>

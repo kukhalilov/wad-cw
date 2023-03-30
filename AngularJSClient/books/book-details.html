@@ -1,0 +1,58 @@
+<section class="container">
+  <h1>Book Details</h1>
+  <div class="row">
+    <div class="col-md-12">
+      <label>Title:</label>
+      <p>{{vm.book.title}}</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <label>Author:</label>
+      <p>{{vm.book.author.name}} {{vm.book.author.surname}}</p>
+    </div>
+    <div class="col-md-6">
+      <label>Publish Date:</label>
+      <p>{{vm.book.publishDate | date}}</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <label>Page Count:</label>
+      <p>{{vm.book.pageCount}}</p>
+    </div>
+    <div class="col-md-6">
+      <label>Availability:</label>
+      <p>{{vm.book.isAvailable ? 'Available' : 'Not Available'}}</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <label>Description:</label>
+      <p>{{vm.book.description}}</p>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-6">
+      <a ui-sref="editBook({id: vm.book.bookId})" class="btn btn-primary"
+        >Edit</a
+      >
+      <a
+        class="btn btn-danger"
+        data-toggle="modal"
+        data-target="#deleteModalInBookDetails"
+        >Delete</a
+      >
+      <a ui-sref="books" class="btn btn-default">Back to List</a>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div
+    id="deleteModalInBookDetails"
+    class="modal fade"
+    role="dialog"
+    ng-include
+    src="'common/delete-modal.html'"
+  ></div>
+</section>

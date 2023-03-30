@@ -1,0 +1,43 @@
+<section class="container">
+  <h1>Author Details</h1>
+  <div class="row">
+    <div class="col-md-4">
+      <label>Name:</label>
+      <p>{{vm.author.name}}</p>
+    </div>
+    <div class="col-md-4">
+      <label>Surname:</label>
+      <p>{{vm.author.surname}}</p>
+    </div>
+    <div class="col-md-4">
+      <label>Books:</label>
+      <ul>
+        <li ng-repeat="book in vm.author.books">{{book.title}}</li>
+      </ul>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <a ui-sref="editAuthor({id: vm.author.authorId})" class="btn btn-primary"
+        >Edit</a
+      >
+      <a
+        ui-sref="deleteAuthor({id: vm.author.authorId})"
+        class="btn btn-danger"
+        data-toggle="modal"
+        data-target="#deleteModalInAuthorDetails"
+        >Delete</a
+      >
+      <a ui-sref="authors" class="btn btn-default">Back to List</a>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div
+    id="deleteModalInAuthorDetails"
+    class="modal fade"
+    role="dialog"
+    ng-include
+    src="'common/delete-modal.html'"
+  ></div>
+</section>

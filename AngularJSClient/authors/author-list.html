@@ -1,0 +1,186 @@
+<section class="container">
+  <h1>List of Authors</h1>
+
+  <div class="row">
+    <div class="col-sm-10 col-xs-12">
+      <form role="form" class="form">
+        <div class="form-group">
+          <input
+            type="text"
+            class="form-control"
+            id="search"
+            placeholder="Type your search here..."
+            ng-model="vm.searchTerm"
+            ng-keyup="$event.keyCode == 13 ? vm.loadAuthors() : null"
+          />
+        </div>
+      </form>
+    </div>
+
+    <div class="col-sm-2 col-xs-12 btnSearchDiv">
+      <button
+        class="btn btnSearch btn-primary col-xs-12"
+        ng-click="vm.loadAuthors()"
+      >
+        Search
+      </button>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-4">
+      <form role="form">
+        <div class="form-group">
+          <label for="sortBy">Sort by:</label>
+          <select
+            class="form-control"
+            id="sortBy"
+            ng-model="vm.sortBy"
+            ng-change="vm.loadAuthors()"
+          >
+            <option value="name">Name</option>
+            <option value="surname">Surname</option>
+          </select>
+        </div>
+      </form>
+    </div>
+    <div class="col-md-4">
+      <form role="form">
+        <div class="form-group">
+          <label for="sortOrder">Sort order:</label>
+          <select
+            class="form-control"
+            id="sortOrder"
+            ng-model="vm.sortAsc"
+            ng-change="vm.loadAuthors()"
+          >
+            <option ng-value="true">Ascending</option>
+            <option ng-value="false">Descending</option>
+          </select>
+        </div>
+      </form>
+    </div>
+    <div class="col-md-4">
+      <form role="form">
+        <div class="form-group">
+          <label for="pageSize">Page size:</label>
+          <select
+            class="form-control"
+            id="pageSize"
+            ng-model="vm.pageSize"
+            ng-change="vm.loadAuthors()"
+          >
+            <option ng-value="5">5</option>
+            <option ng-value="10">10</option>
+            <option ng-value="15">15</option>
+          </select>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="row">
+    <h3 class="col-xs-12 text-center">Total authors: {{vm.totalItems}}</h3>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>No</th>
+          <th>Name</th>
+          <th>Surname</th>
+          <th>Books</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- loop over the list of authors and display each one -->
+        <tr ng-repeat="author in vm.authors.slice(0, vm.pageSize)">
+          <td>{{vm.pageSize * (vm.currentPage - 1) + $index + 1}}</td>
+          <td ng-bind-html="author.name | highlight: vm.searchTermForHighlight">
+            {{author.name}}
+          </td>
+          <td
+            ng-bind-html="author.surname | highlight: vm.searchTermForHighlight"
+          >
+            {{author.surname}}
+          </td>
+          <td>
+            <!-- loop over the books of the author and display their titles -->
+            <span ng-repeat="book in author.books"
+              >{{$index + 1}}) {{book.title}}{{$last ? '' : ', '}}</span
+            >
+          </td>
+          <td>
+            <!-- links to edit and delete the author -->
+            <a ui-sref="authorDetails({id: author.authorId})">Details</a>
+            <a ui-sref="editAuthor({id: author.authorId})">Edit</a>
+            <a
+              class="deleteAuthor"
+              ng-click="vm.setAuthorToDeleteId(author.authorId)"
+              data-toggle="modal"
+              data-target="#deleteModalInAuthorList"
+              >Delete</a
+            >
+          </td>
+        </tr>
+
+        <!-- add additional rows if the data is less than vm.pageSize -->
+        <tr
+          ng-repeat="n in [] | range: vm.pageSize - vm.authors.length track by $index"
+        >
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12 btnAddDiv">
+      <a ui-sref="addAuthor" class="btn btnAdd btn-primary col-xs-12"
+        >New Author</a
+      >
+    </div>
+  </div>
+
+  <!-- pagination -->
+  <div class="text-center">
+    <ul class="pagination">
+      <li ng-class="{disabled: vm.currentPage === 1}">
+        <a ng-click="vm.goToFirstPage()">&laquo;</a>
+      </li>
+      <li ng-class="{disabled: vm.currentPage === 1}">
+        <a ng-click="vm.goToPreviousPage()">&lsaquo;</a>
+      </li>
+      <li
+        ng-repeat="page in vm.pages track by $index"
+        ng-class="{active: vm.currentPage === page}"
+      >
+        <a ng-click="vm.currentPage = page;vm.loadAuthors()">{{page}}</a>
+      </li>
+      <li ng-class="{disabled: vm.currentPage === vm.totalPages}">
+        <a ng-click="vm.goToNextPage()">&rsaquo;</a>
+      </li>
+      <li ng-class="{disabled: vm.currentPage === vm.totalPages}">
+        <a ng-click="vm.goToLastPage()">&raquo;</a>
+      </li>
+    </ul>
+    <div>Page {{vm.currentPage}} of {{vm.totalPages}}</div>
+  </div>
+
+  <!-- Modal -->
+  <div
+    id="deleteModalInAuthorList"
+    class="modal fade"
+    role="dialog"
+    ng-include
+    src="'common/delete-modal.html'"
+  ></div>
+</section>

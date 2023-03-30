@@ -1,0 +1,183 @@
+<section class="container">
+  <h1>List of Books</h1>
+
+  <div class="row">
+    <div class="col-sm-10 col-xs-12">
+      <form role="form" class="form">
+        <div class="form-group">
+          <input
+            type="text"
+            class="form-control"
+            id="search"
+            placeholder="Type your search here..."
+            ng-model="vm.searchTerm"
+            ng-keyup="$event.keyCode == 13 ? vm.loadBooks() : null"
+          />
+        </div>
+      </form>
+    </div>
+
+    <div class="col-sm-2 col-xs-12 btnSearchDiv">
+      <button
+        class="btn btnSearch btn-primary col-xs-12"
+        ng-click="vm.loadBooks()"
+      >
+        Search
+      </button>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-md-4">
+      <form role="form">
+        <div class="form-group">
+          <label for="sortBy">Sort by:</label>
+          <select
+            class="form-control"
+            id="sortBy"
+            ng-model="vm.sortBy"
+            ng-change="vm.loadBooks()"
+          >
+            <option value="title">Title</option>
+            <option value="publishDate">Publish Date</option>
+            <option value="pageCount">Page Count</option>
+            <option value="authorName">Author Name</option>
+            <option value="authorSurname">Author Surname</option>
+          </select>
+        </div>
+      </form>
+    </div>
+    <div class="col-md-4">
+      <form role="form">
+        <div class="form-group">
+          <label for="sortOrder">Sort order:</label>
+          <select
+            class="form-control"
+            id="sortOrder"
+            ng-model="vm.sortAsc"
+            ng-change="vm.loadBooks()"
+          >
+            <option ng-value="true">Ascending</option>
+            <option ng-value="false">Descending</option>
+          </select>
+        </div>
+      </form>
+    </div>
+    <div class="col-md-4">
+      <form role="form">
+        <div class="form-group">
+          <label for="pageSize">Page size:</label>
+          <select
+            class="form-control"
+            id="pageSize"
+            ng-model="vm.pageSize"
+            ng-change="vm.loadBooks()"
+          >
+            <option ng-value="5">5</option>
+            <option ng-value="10">10</option>
+            <option ng-value="15">15</option>
+          </select>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <div class="row">
+    <h3 class="col-xs-12 text-center">Total books: {{vm.totalItems}}</h3>
+  </div>
+
+  <div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th>No</th>
+          <th>Title</th>
+          <th>Publish Date</th>
+          <th>Page Count</th>
+          <th>Author</th>
+          <th>Is Available?</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <!-- loop over the list of books and display each one -->
+        <tr ng-repeat="book in vm.books.slice(0, vm.pageSize)">
+          <td>{{vm.pageSize * (vm.currentPage - 1) + $index + 1}}</td>
+          <td ng-bind-html="book.title | highlight: vm.searchTermForHighlight">
+            {{book.title}}
+          </td>
+          <td>{{book.publishDate | date:'yyyy-MM-dd'}}</td>
+          <td>{{book.pageCount}}</td>
+          <td>{{book.author.name}} {{book.author.surname}}</td>
+          <td>{{book.isAvailable ? 'Yes' : 'No'}}</td>
+          <td>
+            <!-- links to edit and delete the book -->
+            <a ui-sref="bookDetails({id: book.bookId})">Details</a>
+            <a ui-sref="editBook({id: book.bookId})">Edit</a>
+            <a
+              class="deleteBook"
+              ng-click="vm.setBookToDeleteId(book.bookId)"
+              data-toggle="modal"
+              data-target="#deleteModalInBookList"
+            >
+              Delete
+            </a>
+          </td>
+        </tr>
+
+        <!-- add additional rows if the data is less than vm.pageSize -->
+        <tr
+          ng-repeat="n in [] | range: vm.pageSize - vm.books.length track by $index"
+        >
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="row">
+    <div class="col-xs-12 btnAddDiv">
+      <a ui-sref="addBook" class="btn btnAdd btn-primary col-xs-12">New Book</a>
+    </div>
+  </div>
+
+  <!-- pagination -->
+  <div class="text-center">
+    <ul class="pagination">
+      <li ng-class="{disabled: vm.currentPage === 1}">
+        <a ng-click="vm.goToFirstPage()">&laquo;</a>
+      </li>
+      <li ng-class="{disabled: vm.currentPage === 1}">
+        <a ng-click="vm.goToPreviousPage()">&lsaquo;</a>
+      </li>
+      <li
+        ng-repeat="page in vm.pages track by $index"
+        ng-class="{active: vm.currentPage === page}"
+      >
+        <a ng-click="vm.currentPage = page;vm.loadBooks()">{{page}}</a>
+      </li>
+      <li ng-class="{disabled: vm.currentPage === vm.totalPages}">
+        <a ng-click="vm.goToNextPage()">&rsaquo;</a>
+      </li>
+      <li ng-class="{disabled: vm.currentPage === vm.totalPages}">
+        <a ng-click="vm.goToLastPage()">&raquo;</a>
+      </li>
+    </ul>
+    <div>Page {{vm.currentPage}} of {{vm.totalPages}}</div>
+  </div>
+
+  <!-- Modal -->
+  <div
+    id="deleteModalInBookList"
+    class="modal fade"
+    role="dialog"
+    ng-include
+    src="'common/delete-modal.html'"
+  ></div>
+</section>

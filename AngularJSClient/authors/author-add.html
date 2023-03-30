@@ -1,0 +1,61 @@
+<section class="container">
+  <h1>Add Author</h1>
+  <form name="addAuthorForm" ng-submit="vm.addAuthor()">
+    <div
+      class="form-group"
+      ng-class="{'has-error': addAuthorForm.name.$invalid && addAuthorForm.name.$touched}"
+    >
+      <label for="name">Name:</label>
+      <input
+        type="text"
+        class="form-control"
+        name="name"
+        id="name"
+        ng-model="vm.author.name"
+        required
+        maxlength="100"
+      />
+      <span
+        ng-show="addAuthorForm.name.$error.required && addAuthorForm.name.$touched"
+        class="help-block"
+        >Name is required.</span
+      >
+      <span ng-show="addAuthorForm.name.$error.maxlength" class="help-block"
+        >Name cannot exceed 100 characters.</span
+      >
+    </div>
+    <div
+      class="form-group"
+      ng-class="{'has-error': addAuthorForm.surname.$invalid && addAuthorForm.surname.$touched}"
+    >
+      <label for="surname">Surname:</label>
+      <input
+        type="text"
+        class="form-control"
+        name="surname"
+        id="surname"
+        ng-model="vm.author.surname"
+        required
+        maxlength="100"
+      />
+      <span
+        ng-show="addAuthorForm.surname.$error.required && addAuthorForm.surname.$touched"
+        class="help-block"
+        >Surname is required.</span
+      >
+      <span
+        ng-show="addAuthorForm.surname.$error.maxlength"
+        class="help-block"
+        >Surname cannot exceed 100 characters.</span
+      >
+    </div>
+    <button
+      type="submit"
+      class="btn btn-primary"
+      ng-disabled="addAuthorForm.$invalid"
+    >
+      Add
+    </button>
+    <a ui-sref="authors" class="btn btn-default">Cancel</a>
+  </form>
+</section>
